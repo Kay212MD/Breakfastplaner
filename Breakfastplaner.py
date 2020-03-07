@@ -293,11 +293,14 @@ def theplan ():
                         # control function necessary for checking the people id, avoid double id's
                         # or just erase the people from foodcount_dict or create a list with id's
                         # if the easy to control and fill and every Startup there is an empty List
-                        if checkin_list is None:
+                        if not checkin_list : # checks the list
                             sliced_list = (control_list[0:factor])
                             for part in sliced_list:
                                 fill_dict[part[1]] = food_divided
-                                checkin_list.append
+                                checkin_list.append(part[1])
+                        else:
+                            pass
+                        print('checkin_list: ', checkin_list)
                         theplan_dict[plan_tuple[1]] = fill_dict
                 else:
                     pass
