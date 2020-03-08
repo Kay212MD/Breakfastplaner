@@ -25,7 +25,8 @@ cur.execute('''CREATE TABLE IF NOT EXISTS Food
             (id INTEGER PRIMARY KEY UNIQUE,
             foodname TEXT UNIQUE,
             countablefood TINYINT)''')
-            #id = id of foodname, foodname = name of the food (e.g. a wafer-thin mint), countablefood => boolean, is food in a special quantity necassary
+            #id = id of foodname, foodname = name of the food (e.g. a wafer-thin mint),
+            # countablefood => boolean, is food in a special quantity necassary
 
 #Plan
 cur.execute('''CREATE TABLE IF NOT EXISTS Plan
@@ -34,7 +35,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS Plan
             foodquantity INTEGER,
             foodreserve INTEGER,
             people_pfq INTEGER)''')
-            #foodquantity = sum of the food of a special id, foodreserve = if somebody is very hungry but to shy ;-)
+            # foodquantity = sum of the food of a special id, foodreserve = if somebody is very hungry but to shy ;-)
 
 #How_is_in
 cur.execute('''CREATE TABLE IF NOT EXISTS How_is_in
@@ -83,6 +84,19 @@ class circle:
                 continue
             #circle.yes_or_no()
         return check
+
+# search is the list Values are in the Dictionary, if they are in the key value pair will be deleted
+# function is for two dimensional Dictionary key:list with tuple {1:[(y,z),...],...}
+def proof_and_delete_key_by_value(one_dict, one_list):
+    sec_dict = {}
+    for k, v in one_dict.items():
+        for x in v:
+            for x[1] in one_list:
+                transfer_list = ()
+                if i != v:
+                    transfer_list = (x[0], x[1])
+            sec_dict[k]=transfer_list
+    return sec_dict
 
 # class sort_mechanism:
 #     def __init__(self):
@@ -287,24 +301,36 @@ def theplan ():
                         # separate the food in equal parts
                         food_divided = math.ceil(plan_tuple[0]/factor)
                         # control_list is just what the name says only for control
-                        control_list = foodcount_dict.get(plan_tuple[1])
                         print('food_divided: ',food_divided)
-                        print('control_list: ',control_list)
                         # control function necessary for checking the people id, avoid double id's
                         # or just erase the people from foodcount_dict or create a list with id's
                         # if the easy to control and fill and every Startup there is an empty List
-                        if not checkin_list : # checks the list
+# ToDo make a function out of row 309 till 325 check list one function, slice list second function
+                        if not checkin_list : # checks the list is the list empty or not
+                            control_list = foodcount_dict.get(plan_tuple[1])
+                            print('control_list: ', control_list)
                             sliced_list = (control_list[0:factor])
                             for part in sliced_list:
                                 fill_dict[part[1]] = food_divided
                                 checkin_list.append(part[1])
+                            foodcount_dict.pop(plan_tuple[1], None)
                         else:
-                            pass
+                            # target_dict is free of used people_id's
+                            target_dict = proof_and_delete_key_by_value(foodcount_dict, checkin_list)
+                            control_list = target_dict.get(plan_tuple[1])
+                            sliced_list = (control_list[0:factor])
+                            for part in sliced_list:
+                                fill_dict[part[1]] = food_divided
+                                checkin_list.append(part[1])
+                            foodcount_dict.pop(plan_tuple[1], None)
+
+
                         print('checkin_list: ', checkin_list)
                         theplan_dict[plan_tuple[1]] = fill_dict
                 else:
                     pass
     print('theplan_dict: ', theplan_dict)
+    print('new foodcount_dict:', foodcount_dict)
 
 
 
