@@ -98,6 +98,15 @@ def proof_and_delete_key_by_value(one_dict, one_list):
             sec_dict[k]=transfer_list
     return sec_dict
 
+# take two lists, with variables to fill a check list and a dictionary for later use
+def slicing_and_storing(check_list, control_list, slice_var, list_pos, dict_var):
+    fill_dict = {}
+    sliced_list = (control_list[0:slice_var])
+    for i in sliced_list:
+        fill_dict[i[list_pos]] = dict_var
+        check_list.append(i[list_pos])
+    return check_list, fill_dict
+
 # class sort_mechanism:
 #     def __init__(self):
 #         self.relation = relation #(Person/Food relation)
@@ -305,28 +314,22 @@ def theplan ():
                         # control function necessary for checking the people id, avoid double id's
                         # or just erase the people from foodcount_dict or create a list with id's
                         # if the easy to control and fill and every Startup there is an empty List
-# ToDo make a function out of row 309 till 325 check list one function, slice list second function
+# ToDo make a function out of row check list one function, slice list second function
                         if not checkin_list : # checks the list is the list empty or not
                             control_list = foodcount_dict.get(plan_tuple[1])
                             print('control_list: ', control_list)
-                            sliced_list = (control_list[0:factor])
-                            for part in sliced_list:
-                                fill_dict[part[1]] = food_divided
-                                checkin_list.append(part[1])
+                            x1, x2 = slicing_and_storing(checkin_list, control_list, factor, 1, food_divided)
+                            checkin_list = x1
                             foodcount_dict.pop(plan_tuple[1], None)
                         else:
                             # target_dict is free of used people_id's
                             target_dict = proof_and_delete_key_by_value(foodcount_dict, checkin_list)
                             control_list = target_dict.get(plan_tuple[1])
-                            sliced_list = (control_list[0:factor])
-                            for part in sliced_list:
-                                fill_dict[part[1]] = food_divided
-                                checkin_list.append(part[1])
+                            x1, x2 = slicing_and_storing(checkin_list, control_list, factor, 1, food_divided)
+                            checkin_list = x1
                             foodcount_dict.pop(plan_tuple[1], None)
-
-
                         print('checkin_list: ', checkin_list)
-                        theplan_dict[plan_tuple[1]] = fill_dict
+                        theplan_dict[plan_tuple[1]] = x2
                 else:
                     pass
     print('theplan_dict: ', theplan_dict)
