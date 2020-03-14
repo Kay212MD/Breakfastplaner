@@ -85,7 +85,7 @@ class circle:
             #circle.yes_or_no()
         return check
 
-# search is the list Values are in the Dictionary, if they are in the key value pair will be deleted
+# search, are the list Values in the Dictionary, if they are in, the key value pair will be deleted
 # function is for two dimensional Dictionary key:list with tuple {1:[(y,z),...],...}
 def proof_and_delete_key_by_value(one_dict, one_list):
     sec_dict = {}
@@ -302,6 +302,7 @@ def theplan ():
             plan_list_raw = ((v,k) for k, v in plan_dict.items())
             plan_list = (sorted(plan_list_raw, reverse=True))
             for plan_tuple in plan_list:
+                print('plan_tuple: ', plan_tuple)
                 fill_dict = {}
                 # if the number is higher than zero a division is possible and it is countable food
                 if plan_tuple[0] > 0:
@@ -313,25 +314,41 @@ def theplan ():
                         print('food_divided: ',food_divided)
                         # control function necessary for checking the people id, avoid double id's
                         # or just erase the people from foodcount_dict or create a list with id's
-                        # if the easy to control and fill and every Startup there is an empty List
+                        # it is easy to control and fill and every Startup there is an empty List
 # ToDo make a function out of row check list one function, slice list second function
-                        if not checkin_list : # checks the list is the list empty or not
+                        if not checkin_list : # checks the list, is the list empty or not
                             control_list = foodcount_dict.get(plan_tuple[1])
                             print('control_list: ', control_list)
+                            # Output of function generates an failure in the data structure
                             x1, x2 = slicing_and_storing(checkin_list, control_list, factor, 1, food_divided)
-                            checkin_list = x1
+                            checkin_list.append(x1)
                             foodcount_dict.pop(plan_tuple[1], None)
                         else:
                             # target_dict is free of used people_id's
                             target_dict = proof_and_delete_key_by_value(foodcount_dict, checkin_list)
                             control_list = target_dict.get(plan_tuple[1])
+                            print('control_list: ', control_list)
                             x1, x2 = slicing_and_storing(checkin_list, control_list, factor, 1, food_divided)
-                            checkin_list = x1
+                            # checkin_list.append(x1)
                             foodcount_dict.pop(plan_tuple[1], None)
+                        # for i in x1:
+                        #     checkin_list.append(i)
                         print('checkin_list: ', checkin_list)
                         theplan_dict[plan_tuple[1]] = x2
-                else:
-                    pass
+                    else:
+
+                        pass
+                # else:
+                #     control_var = people_div - len(checkin_list)
+                #     if control_var > factor:
+                #         target_dict = proof_and_delete_key_by_value(foodcount_dict, checkin_list)
+                #         control_list = target_dict.get(plan_tuple[1])
+                #         print('control_list: ', control_list)
+                #         x1, x2 = slicing_and_storing(checkin_list, control_list, factor, 1, 0)
+                #         checkin_list.append(x1)
+                #         foodcount_dict.pop(plan_tuple[1], None)
+                #     print('checkin_list: ', checkin_list)
+                #     theplan_dict[plan_tuple[1]] = x2
     print('theplan_dict: ', theplan_dict)
     print('new foodcount_dict:', foodcount_dict)
 
