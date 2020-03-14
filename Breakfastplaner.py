@@ -319,7 +319,7 @@ def theplan ():
                         if not checkin_list : # checks the list, is the list empty or not
                             control_list = foodcount_dict.get(plan_tuple[1])
                             print('control_list: ', control_list)
-                            # Output of function generates an failure in the data structure
+                            # ToDo Output of function generates an failure in the data structure
                             x1, x2 = slicing_and_storing(checkin_list, control_list, factor, 1, food_divided)
                             checkin_list.append(x1)
                             foodcount_dict.pop(plan_tuple[1], None)
