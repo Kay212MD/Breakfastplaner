@@ -93,16 +93,21 @@ def proof_and_delete_key_by_value(one_dict, one_list):
     print('one_list: ',one_list)
     for k, v in one_dict.items():
         print('v: ',v)
+        # copy of the list v for update and v doesn't change, isn't the same like transfer_list = v
+        # copy is necessary for a clean run through v, if you don't copy, the list will have not the
+        # same length anymore and the loop "jump" over the value you want to check, because the value
+        # has the position of the removed value and this position has already been checked
+        # if i is not x[1] doesn't generate the result I expected
+        transfer_list = v.copy()
         for x in v:
-            transfer_list = []
             print('x: ',x)
             for i in one_list:
+                print('i proof: ',i)
                 print('x1:', x[1])
-                if i is not x[1]:
-                    transfer_list.append(x)
-                    # convert dict into list, list items are now keys and this will automatically remove duplicates
-                    transfer_list = list(dict.fromkeys(transfer_list))
-                    print('transfer_list: ',transfer_list)
+                if i is x[1]:
+                    transfer_list.remove(x)
+                    print('transfer_list: ', transfer_list)
+                    print('v transfer_list: ',v)
         sec_dict[k]=transfer_list
         print('sec_dict: ', sec_dict)
     return sec_dict
@@ -117,11 +122,14 @@ def slicing_and_storing(check_list, control_list, slice_var, list_pos, dict_var)
         print('fill_dict: ', fill_dict)
         check_list.append(i[list_pos])
         # convert dict into list, list items are now keys and this will automatically remove duplicates
-        check_list = list(dict.fromkeys(check_list))
+        check_list = del_double_entries_list(check_list)
         print('check_list: ',check_list)
     return check_list, fill_dict
 
-
+# convert list into dict into list, list items are now keys and this will automatically remove duplicates
+# and the output is a clean list
+def del_double_entries_list(double_list):
+    return list(dict.fromkeys(double_list))
 
 # class sort_mechanism:
 #     def __init__(self):
@@ -350,6 +358,7 @@ def theplan ():
                             print('x1: ', x1)
                             print('x2: ', x2)
                             checkin_list.extend(x1)
+                            checkin_list = del_double_entries_list(checkin_list)
                             foodcount_dict.pop(plan_tuple[1], None)
                         print('checkin_list: ', checkin_list)
                         theplan_dict[plan_tuple[1]] = x2
@@ -370,6 +379,7 @@ def theplan ():
                         print('x1: ', x1)
                         print('x2: ', x2)
                         checkin_list.extend(x1)
+                        checkin_list = del_double_entries_list(checkin_list)
                         foodcount_dict.pop(plan_tuple[1], None)
                     else:
                         target_dict = proof_and_delete_key_by_value(foodcount_dict, checkin_list)
@@ -379,6 +389,7 @@ def theplan ():
                         print('x1: ', x1)
                         print('x2: ', x2)
                         checkin_list.extend(x1)
+                        checkin_list = del_double_entries_list(checkin_list)
                         foodcount_dict.pop(plan_tuple[1], None)
                     print('checkin_list: ', checkin_list)
                     theplan_dict[plan_tuple[1]] = x2
