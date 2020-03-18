@@ -89,13 +89,21 @@ class circle:
 # function is for two dimensional Dictionary key:list with tuple {1:[(y,z),...],...}
 def proof_and_delete_key_by_value(one_dict, one_list):
     sec_dict = {}
+    print('one_dict: ',one_dict)
+    print('one_list: ',one_list)
     for k, v in one_dict.items():
+        print('v: ',v)
         for x in v:
-            for x[1] in one_list:
-                transfer_list = ()
-                if i != v:
-                    transfer_list = (x[0], x[1])
+            print('x: ',x)
+            for i in one_list:
+                print('x1:', x[1])
+                transfer_list = []
+                if i is not x[1]:
+                    transfer_list.append(x)
+                    print('transfer_list: ',transfer_list)
             sec_dict[k]=transfer_list
+            print('sec_dict: ', sec_dict)
+        print('sec_dict: ', sec_dict)
     return sec_dict
 
 # take two lists, with variables to fill a check list and a dictionary for later use
@@ -103,9 +111,14 @@ def slicing_and_storing(check_list, control_list, slice_var, list_pos, dict_var)
     fill_dict = {}
     sliced_list = (control_list[0:slice_var])
     for i in sliced_list:
+        print('i: ',i)
         fill_dict[i[list_pos]] = dict_var
+        print('fill_dict: ', fill_dict)
         check_list.append(i[list_pos])
+        print('check_list: ',check_list)
     return check_list, fill_dict
+
+
 
 # class sort_mechanism:
 #     def __init__(self):
@@ -316,12 +329,14 @@ def theplan ():
                         # or just erase the people from foodcount_dict or create a list with id's
                         # it is easy to control and fill and every Startup there is an empty List
 # ToDo make a function out of row check list one function, slice list second function
-                        if not checkin_list : # checks the list, is the list empty or not
+                        if not checkin_list: # checks the list, is the list empty or not
                             control_list = foodcount_dict.get(plan_tuple[1])
                             print('control_list: ', control_list)
                             # ToDo Output of function generates an failure in the data structure
                             x1, x2 = slicing_and_storing(checkin_list, control_list, factor, 1, food_divided)
-                            checkin_list.append(x1)
+                            print('x1: ', x1)
+                            print('x2: ', x2)
+                            checkin_list = x1
                             foodcount_dict.pop(plan_tuple[1], None)
                         else:
                             # target_dict is free of used people_id's
@@ -329,26 +344,41 @@ def theplan ():
                             control_list = target_dict.get(plan_tuple[1])
                             print('control_list: ', control_list)
                             x1, x2 = slicing_and_storing(checkin_list, control_list, factor, 1, food_divided)
-                            # checkin_list.append(x1)
+                            print('x1: ', x1)
+                            print('x2: ', x2)
+                            checkin_list.extend(x1)
                             foodcount_dict.pop(plan_tuple[1], None)
-                        # for i in x1:
-                        #     checkin_list.append(i)
                         print('checkin_list: ', checkin_list)
                         theplan_dict[plan_tuple[1]] = x2
                     else:
-
                         pass
-                # else:
-                #     control_var = people_div - len(checkin_list)
-                #     if control_var > factor:
-                #         target_dict = proof_and_delete_key_by_value(foodcount_dict, checkin_list)
-                #         control_list = target_dict.get(plan_tuple[1])
-                #         print('control_list: ', control_list)
-                #         x1, x2 = slicing_and_storing(checkin_list, control_list, factor, 1, 0)
-                #         checkin_list.append(x1)
-                #         foodcount_dict.pop(plan_tuple[1], None)
-                #     print('checkin_list: ', checkin_list)
-                #     theplan_dict[plan_tuple[1]] = x2
+                else:
+                    print('else without value')
+                    print('foodcount_dict: ',foodcount_dict)
+                    control_var = people_div - len(checkin_list)
+                    print('control_var: ',control_var)
+                    if control_var > factor:
+                        print('checkin_list: ', checkin_list)
+                        target_dict = proof_and_delete_key_by_value(foodcount_dict, checkin_list)
+                        print('target_dict: ',target_dict)
+                        control_list = target_dict.get(plan_tuple[1])
+                        print('control_list: ', control_list)
+                        x1, x2 = slicing_and_storing(checkin_list, control_list, factor, 1, 0)
+                        print('x1: ', x1)
+                        print('x2: ', x2)
+                        checkin_list.extend(x1)
+                        foodcount_dict.pop(plan_tuple[1], None)
+                    else:
+                        target_dict = proof_and_delete_key_by_value(foodcount_dict, checkin_list)
+                        control_list = target_dict.get(plan_tuple[1])
+                        print('control_list: ', control_list)
+                        x1, x2 = slicing_and_storing(checkin_list, control_list, factor, 1, 0)
+                        print('x1: ', x1)
+                        print('x2: ', x2)
+                        checkin_list.extend(x1)
+                        foodcount_dict.pop(plan_tuple[1], None)
+                    print('checkin_list: ', checkin_list)
+                    theplan_dict[plan_tuple[1]] = x2
     print('theplan_dict: ', theplan_dict)
     print('new foodcount_dict:', foodcount_dict)
 
