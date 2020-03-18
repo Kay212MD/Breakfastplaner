@@ -28,7 +28,7 @@ def proof_and_delete_key_by_value(one_dict, one_list):
     return sec_dict
 
 x = proof_and_delete_key_by_value(my_dict, my_list)
-print(x)
+print('proof_and_delete_key_by_value: ',x)
 
 
 def check_list_and_change_list_and_dict(check_list, control_list):
