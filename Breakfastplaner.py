@@ -94,15 +94,16 @@ def proof_and_delete_key_by_value(one_dict, one_list):
     for k, v in one_dict.items():
         print('v: ',v)
         for x in v:
+            transfer_list = []
             print('x: ',x)
             for i in one_list:
                 print('x1:', x[1])
-                transfer_list = []
                 if i is not x[1]:
                     transfer_list.append(x)
+                    # convert dict into list, list items are now keys and this will automatically remove duplicates
+                    transfer_list = list(dict.fromkeys(transfer_list))
                     print('transfer_list: ',transfer_list)
-            sec_dict[k]=transfer_list
-            print('sec_dict: ', sec_dict)
+        sec_dict[k]=transfer_list
         print('sec_dict: ', sec_dict)
     return sec_dict
 
@@ -115,6 +116,8 @@ def slicing_and_storing(check_list, control_list, slice_var, list_pos, dict_var)
         fill_dict[i[list_pos]] = dict_var
         print('fill_dict: ', fill_dict)
         check_list.append(i[list_pos])
+        # convert dict into list, list items are now keys and this will automatically remove duplicates
+        check_list = list(dict.fromkeys(check_list))
         print('check_list: ',check_list)
     return check_list, fill_dict
 
