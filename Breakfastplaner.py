@@ -97,10 +97,14 @@ def proof_and_delete_key_by_value(one_dict, one_list):
         # because the value
         # has the position of the removed value and this position has already been checked
         transfer_list = v.copy()
+        # the list with the tuples is copied, now we run through v and in the next step through
+        # one_list to compare if the Tuple x has on the position 1 the same value as i in
+        # one_list if they have the same value we remove the x tuple form the transfer_list
         for x in v:
             for i in one_list:
                 if i is x[1]:
                     transfer_list.remove(x)
+        # sec_dict is now the new clean dict, the tuples we doesn't need are removed
         sec_dict[k] = transfer_list
     return sec_dict
 
@@ -394,6 +398,8 @@ def theplan():
                                                                    new_factor,
                                                                    1, food_divided)
                                 break
+                            elif new_factor <= 1:
+                                break
                             else:
                                 continue
                 else:
@@ -416,12 +422,21 @@ def theplan():
 # ToDo 3. Have to Check that in the case food_control is not bigger than people_div, nobody have
     #  ToDo more than one food_id
     else:
-        factor = math.ceil(relation_food_people / countable_food)
-        for plan_tuple in plan_list:
-            if plan_tuple[0] > 0:
-                if (factor*people_div) < plan_tuple[0]:
+        # check how big the difference between people an food is
+        food_people_diff = food_control - people_div
+        # creates the factor for the division of the countable foods and the number of Persons
+        if food_people_diff == 0:
+            # everybody gets one food_id, it is not necessary for checking and slicing the
+            # countable food
+        else:
+            # know is something intelligent necessary, what depends on the difference between
+            # people and food
+            factor = math.ceil(relation_food_people / countable_food)
+            for plan_tuple in plan_list:
+                if plan_tuple[0] > 0:
+                    if (factor*people_div) < plan_tuple[0]:
 
-                    print(factor)
+                        print(factor)
         pass
 
 def main():
