@@ -429,6 +429,11 @@ def theplan():
         if food_people_diff == 0:
             # everybody gets one food_id, it is not necessary for checking and slicing the
             # countable food
+            checkin_list, output_dict, foodcount_dict = \
+                check_list_existing_and_modify(checkin_list,
+                                               foodcount_dict, plan_tuple[1], 1,
+                                               1, 1)
+            theplan_dict[plan_tuple[1]] = output_dict
         else:
             # know is something intelligent necessary, what depends on the difference between
             # people and food
