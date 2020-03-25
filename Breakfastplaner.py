@@ -399,7 +399,7 @@ def theplan():
                                                                    1, food_divided)
                                 break
                             elif new_factor <= 1:
-                                print('Something is worng!')
+                                print('Something is wrong!')
                                 break
                             else:
                                 continue
