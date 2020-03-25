@@ -329,6 +329,9 @@ def theplan():
             foodquantity = foodquantity + pfq
             plan_dict[food_id] = foodquantity
             people_dict[people_id] = counter
+        # sorts the people depending on the counter and it is easier to slice the list,
+        # because the people with the lowest counter are in the first positions and they have to
+        # organize the food_id for the next breakfast
         people_list = [(v, k) for k, v in people_dict.items()]
         people_list.sort()
         foodcount_dict[food_id] = people_list
@@ -417,11 +420,12 @@ def theplan():
                                                            foodcount_dict, plan_tuple[1], factor,
                                                            1, 0)
                         theplan_dict[plan_tuple[1]] = output_dict
+        # backup of the plan for later usage
         theplan_dict_backup = theplan_dict.copy()
         print('theplan_dict: ', theplan_dict)
         print('new foodcount_dict:', foodcount_dict)
 # ToDo 3. Have to Check that in the case food_control is not bigger than people_div, nobody have
-    #  ToDo more than one food_id
+    #  ToDo more than one food_id if it is possible
     else:
         # check how big the difference between people an food is
         food_people_diff = food_control - people_div
@@ -436,13 +440,10 @@ def theplan():
             theplan_dict[plan_tuple[1]] = output_dict
         else:
             # know is something intelligent necessary, what depends on the difference between
-            # people and food
-            factor = math.ceil(relation_food_people / countable_food)
-            for plan_tuple in plan_list:
-                if plan_tuple[0] > 0:
-                    if (factor*people_div) < plan_tuple[0]:
+            # people and food, maybe slice the food_list by a factor and distribute them over the
+            # present people
 
-                        print(factor)
+            pass
         pass
 
 def main():
