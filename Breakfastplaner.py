@@ -351,7 +351,8 @@ def theplan():
         if countable > 0:
             countable_food += 1
     print('countable_food: ', countable_food)
-    # transformation of plan_dict for further iteration
+    # transformation of plan_dict for further iteration, the countable_food is know on the first
+    # positions
     plan_list = [(v, k) for k, v in plan_dict.items()]
     plan_list.sort(reverse=True)
 
@@ -395,11 +396,13 @@ def theplan():
                         while True:
                             new_factor = factor -1
                             if (new_factor*people_div) < plan_tuple[0]:
+                                food_divided = math.ceil(plan_tuple[0]/new_factor)
                                 checkin_list, output_dict, foodcount_dict = \
                                     check_list_existing_and_modify(checkin_list,
                                                                    foodcount_dict, plan_tuple[1],
                                                                    new_factor,
                                                                    1, food_divided)
+                                theplan_dict[plan_tuple[1]] = output_dict
                                 break
                             elif new_factor <= 1:
                                 print('Something is wrong!')
@@ -407,19 +410,15 @@ def theplan():
                             else:
                                 continue
                 else:
-                    control_var = people_div - len(checkin_list)
-                    if control_var > factor:
-                        checkin_list, output_dict, foodcount_dict = \
-                            check_list_existing_and_modify(checkin_list,
-                                                           foodcount_dict, plan_tuple[1], factor,
-                                                           1, 0)
-                        theplan_dict[plan_tuple[1]] = output_dict
-                    else:
-                        checkin_list, output_dict, foodcount_dict = \
-                            check_list_existing_and_modify(checkin_list,
-                                                           foodcount_dict, plan_tuple[1], factor,
-                                                           1, 0)
-                        theplan_dict[plan_tuple[1]] = output_dict
+                    checkin_list, output_dict, foodcount_dict = \
+                        check_list_existing_and_modify(checkin_list,
+                                                       foodcount_dict, plan_tuple[1], factor,
+                                                       1, 0)
+                    theplan_dict[plan_tuple[1]] = output_dict
+        else:
+            for plan_tuple in plan_list:
+                pass
+            pass
         # backup of the plan for later usage
         theplan_dict_backup = theplan_dict.copy()
         print('theplan_dict: ', theplan_dict)
@@ -442,6 +441,12 @@ def theplan():
             # know is something intelligent necessary, what depends on the difference between
             # people and food, maybe slice the food_list by a factor and distribute them over the
             # present people
+            factor = math.ceil(food_control/people_div)
+            for people_tuple in people_rows:
+                people_id = people_tuple[0]
+                if countable_food > 0:
+                    pass
+                pass
 
             pass
         pass
