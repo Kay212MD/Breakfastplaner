@@ -178,8 +178,8 @@ def personlist():
         else:
             # Check if food is wanted
             person = input("Bitte Namen der Person angeben: ")
-            # maybe change later code, two person with the same name are really possible
-            # maybe update with GUI and SQL Implementation in later Code
+            # ToDO maybe change later code, two person with the same name are really possible
+            # ToDo maybe update with GUI and SQL Implementation in later Code
             cur.execute('INSERT OR IGNORE INTO People (name) Values (?)', (person,))
             conn.commit()
             cur.execute('SELECT foodname FROM Food')
@@ -417,8 +417,12 @@ def theplan():
                     theplan_dict[plan_tuple[1]] = output_dict
         else:
             for plan_tuple in plan_list:
-                pass
-            pass
+                checkin_list, output_dict, foodcount_dict = \
+                    check_list_existing_and_modify(checkin_list,
+                                                   foodcount_dict, plan_tuple[1],
+                                                   1,
+                                                   1, plan_tuple[0])
+                theplan_dict[plan_tuple[1]] = output_dict
         # backup of the plan for later usage
         theplan_dict_backup = theplan_dict.copy()
         print('theplan_dict: ', theplan_dict)
