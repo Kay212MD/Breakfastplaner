@@ -78,3 +78,34 @@ def check_list_existing_and_modify(list_to_check, a_dictionary, dictionary_posit
         list_to_check = del_double_entries_list(list_to_check)
         a_dictionary.pop(dictionary_position, None)
         return list_to_check, a_dictionary
+
+
+theplan_dict = {}
+# foodcoount_dict = {food_id: [(counter, people_id),....}
+foodcount_dict = {1: [(0, 2), (25, 1)],
+                  2: [(0, 1), (0, 2)],
+                  3: [(0, 1), (2, 2)],
+                  4: [(0, 2), (1, 1)]}
+factor = 2
+checkin_list = []
+
+for food_id, counter_people_list in foodcount_dict.items():
+    print(counter_people_list)
+    output_dict = {}
+    if not checkin_list:
+        counter_people_list = counter_people_list[:1]
+        counter_people_tuple = counter_people_list[0]
+        people_id = counter_people_tuple[1]
+        print(counter_people_tuple)
+        print(people_id)
+        output_dict[food_id] = counter_people_tuple
+        print(output_dict)
+        checkin_list.append(people_id)
+    else:
+
+        print()
+
+
+
+
+    # theplan_dict[plan_tuple[1]] = output_dict

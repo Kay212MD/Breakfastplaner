@@ -446,9 +446,14 @@ def theplan():
             # people and food, maybe slice the food_list by a factor and distribute them over the
             # present people
             factor = math.ceil(food_control/people_div)
-            for people_tuple in people_rows:
+            for food_id, counter_people_list in foodcount_dict:
                 people_id = people_tuple[0]
-                if countable_food > 0:
+                # maybe a distribution over different people, when the countable_food number is
+                # to high, but I think it isn't necessary, may be it is better for letter
+                # program optimization to integrate a price-tag tag change this
+                for food_id_row_tuple in food_id_rows:
+                    food_id = food_id_row_tuple[0]
+
                     pass
                 pass
 
