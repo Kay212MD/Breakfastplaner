@@ -281,7 +281,7 @@ def personavailable():
         #print(namerows)
         for row in namerows:
             name = row[0]
-            print('Person:', name)
+            print(f"Peron: {name.title()}")
             text = Circle(text1="Angabe ob Person anwesend ist (j/n): ", check1='j', check2='n',
                           text2='Falsche Eingabe!', text3=0)
             check = text.yes_or_no()
@@ -362,16 +362,16 @@ def theplan():
         # food and how to distribute them
         food_control = len(plan_dict)
         # Control Structure
-    print('plan_dict:', plan_dict)
-    print('foodcount_dict:', foodcount_dict)
-    print('people_div: ', people_div)
-    print('food_control: ', food_control)
+    # print('plan_dict:', plan_dict)
+    # print('foodcount_dict:', foodcount_dict)
+    # print('people_div: ', people_div)
+    # print('food_control: ', food_control)
 # 1. How many countable food is there
     countable_food = 0
     for food_id, countable in plan_dict.items():
         if countable > 0:
             countable_food += 1
-    print('countable_food: ', countable_food)
+    # print('countable_food: ', countable_food)
     # transformation of plan_dict for further iteration, the countable_food is know on the first
     # positions
     plan_list = [(v, k) for k, v in plan_dict.items()]
@@ -380,7 +380,7 @@ def theplan():
     if people_div > food_control:
         # form relationship between people_div and food_control, all values are round up
         relation_food_people = math.ceil(people_div/food_control)
-        print('relation_food_people: ', relation_food_people)
+        # print('relation_food_people: ', relation_food_people)
         # can I spread the food and the countable food over more than one Person
         if relation_food_people > countable_food:
             # creates the factor for the division of the countable foods and the number of Persons
@@ -388,7 +388,7 @@ def theplan():
             # x = max(plan_dict, key=plan_dict.get)
             # print ('MAX', x)
             for plan_tuple in plan_list:
-                print('plan_tuple: ', plan_tuple)
+                # print('plan_tuple: ', plan_tuple)
                 # if the number is higher than zero a division is possible and it is countable food
                 if plan_tuple[0] > 0:
                     # if factor * people_div is smaller than the
@@ -397,7 +397,7 @@ def theplan():
                         # separate the food in equal parts
                         food_divided = math.ceil(plan_tuple[0]/factor)
                         # control_list is just what the name says only for control
-                        print('food_divided: ', food_divided)
+                        # print('food_divided: ', food_divided)
                         # control function necessary for checking the people id, avoid double id's
                         # or just erase the people from foodcount_dict or create a list with id's
                         # it is easy to control and fill and every Startup there is an empty List
@@ -405,9 +405,9 @@ def theplan():
                             check_list_existing_and_modify(checkin_list,
                                                            foodcount_dict, plan_tuple[1], factor,
                                                            1, food_divided)
-                        print('food_count_dict: ', foodcount_dict)
-                        print('checkin_list', checkin_list)
-                        print('output_dict ', output_dict)
+                        # print('food_count_dict: ', foodcount_dict)
+                        # print('checkin_list', checkin_list)
+                        # print('output_dict ', output_dict)
                         theplan_dict[plan_tuple[1]] = output_dict
                     else:
                         # reduce factor by one and proof if a division is possible
@@ -501,6 +501,12 @@ def theplan():
                                 active = True
                 theplan_dict[food_id] = output_dict
                 # print('theplan_dict: ', theplan_dict)
+
+
+def fill_the_table_with_the_plan():
+    """ set the counter related to food and people one up
+        create the table with names and quantity,
+        so that everybody know's what he/she/it have to buy"""
 
 
 def main():
