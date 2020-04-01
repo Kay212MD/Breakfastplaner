@@ -67,7 +67,7 @@ def check_list_existing_and_modify(list_to_check, a_dictionary, dictionary_posit
                                                        list_pos, dict_var)
         list_to_check = output_list
         a_dictionary.pop(dictionary_position, None)
-        return list_to_check, a_dictionary
+        return list_to_check, output_dict, a_dictionary
     else:
         target_dict = proof_and_delete_key_by_value(a_dictionary,
                                                     list_to_check)
@@ -82,28 +82,35 @@ def check_list_existing_and_modify(list_to_check, a_dictionary, dictionary_posit
 
 theplan_dict = {}
 # foodcoount_dict = {food_id: [(counter, people_id),....}
-foodcount_dict = {1: [(0, 2), (25, 1)],
-                  2: [(0, 1), (0, 2)],
-                  3: [(0, 1), (2, 2)],
-                  4: [(0, 2), (1, 1)],
-                  5: [(0, 2), (1, 1)]}
+foodcount_dict = {1: [(0, 2), (0, 3), (25, 1)],
+                  2: [(0, 3), (0, 1), (0, 2)],
+                  3: [(0, 1), (2, 2), (3,3)],
+                  4: [(0, 2), (1, 1), (2, 3)],
+                  5: [(0, 2), (0, 3), (2, 1)],
+                  6: [(0, 1), (0, 3), (2, 2)]}
 
-plan_list = [(10, 1), (0, 2), (0, 3), (0, 4)]
+# foodquantity and food_id
+plan_list = [(10, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6)]
 
 factor = 2
 checkin_list = []
 
-for food_id, counter_people_list in foodcount_dict.items():
+step = 1
+for plan_tuple in plan_list:
+    food_id = plan_tuple[1]
+    foodquantity = plan_tuple[0]
+    counter_people_list = foodcount_dict.get(food_id)
     print('counter_people_list: ', counter_people_list)
     output_dict = {}
-    counter_people_list = counter_people_list[:1]
-    counter_people_tuple = counter_people_list[0]
+    counter_people_list_sliced = counter_people_list[:1]
+    counter_people_tuple = counter_people_list_sliced[0]
     counter = counter_people_tuple[0]
     people_id = counter_people_tuple[1]
     if not checkin_list:
         print(counter_people_tuple)
         print(people_id)
-        output_dict[people_id] = counter
+        print("step: ", step)
+        output_dict[people_id] = foodquantity
         print('output_dict: ', output_dict)
         checkin_list.append(people_id)
     else:
@@ -111,23 +118,39 @@ for food_id, counter_people_list in foodcount_dict.items():
         print('people_id: ', people_id)
         number_of_people_id = checkin_list.count(people_id)
         print('number_of_people_id: ', number_of_people_id)
-        if number_of_people_id <= factor:
-            output_dict[people_id] = counter
-            print('output_dict: ', output_dict)
-            checkin_list.append(people_id)
-        else:
-            slice_var = 1
-            while number_of_people_id > factor:
-                prev_slice_var = slice_var
-                slice_var += slice_var
-                counter_people_list = counter_people_list[prev_slice_var:slice_var]
-                counter_people_tuple = counter_people_list[0]
-                counter = counter_people_tuple[0]
-                people_id = counter_people_tuple[1]
-                output_dict[people_id] = counter
+        active = True
+        while active:
+            if number_of_people_id < factor:
+                print("if case")
+                step += 1
+                print("step: ", step)
+                output_dict[people_id] = foodquantity
                 print('output_dict: ', output_dict)
                 checkin_list.append(people_id)
-        print('output_dict: ', output_dict)
+                active = False
+            else:
+                print("else case")
+                slice_var = 1
+                active = True
+                while active:
+                    print("while")
+                    prev_slice_var = slice_var
+                    slice_var += 1
+                    counter_people_list_sliced = counter_people_list[prev_slice_var:slice_var]
+                    counter_people_tuple = counter_people_list_sliced[0]
+                    counter = counter_people_tuple[0]
+                    number_of_people_id = checkin_list.count(people_id)
+                    print('number_of_people_id: ', number_of_people_id)
+                    if number_of_people_id <= factor:
+                        print("if case")
+                        step += 1
+                        print("step: ", step)
+                        output_dict[people_id] = foodquantity
+                        print('output_dict: ', output_dict)
+                        checkin_list.append(people_id)
+                        active = False
+                    else:
+                        active =True
 
     theplan_dict[food_id] = output_dict
     print('theplan_dict: ', theplan_dict)

@@ -44,8 +44,10 @@ cur.execute('''CREATE TABLE IF NOT EXISTS How_is_in
 
 conn.commit()
 
-# Circle class, proofs inputs of Users, was a little bit late the Idea, but i am a beginner
+
 class Circle:
+    """ Circle class, proofs inputs of Users, was a little bit late the Idea, but i am a beginner"""
+
     def __init__(self, text1, text2, text3, check1, check2):
         self.text1 = text1
         self.text2 = text2
@@ -86,52 +88,63 @@ class Circle:
             #Circle.yes_or_no()
         return check
 
-# search, are the list Values in the Dictionary, if they are in, the key value pair will be deleted
-# function is for two dimensional Dictionary key:list with tuple {1:[(y,z),...],...}
+
 def proof_and_delete_key_by_value(one_dict, one_list):
+    """ search, are the list Values in the Dictionary, if they are in,
+        the key value pair will be deleted
+        function is for two dimensional Dictionary key:list with tuple {1:[(y,z),...],...}"""
     sec_dict = {}
     for k, v in one_dict.items():
-        # copy of the list v for update and v doesn't change, isn't the same like transfer_list = v
-        # copy is necessary for a clean run through v, if you don't copy, the list will have not the
-        # same length anymore and the loop "jump" over the value you want to check,
-        # because the value
-        # has the position of the removed value and this position has already been checked
+        """ copy of the list v for update and v doesn't change, 
+            isn't the same like transfer_list = v
+            copy is necessary for a clean run through v, if you don't copy, 
+            the list will have not the
+            same length anymore and the loop "jump" over the value you want to check,
+            because the value
+            has the position of the removed value and this position has already been checked"""
         transfer_list = v.copy()
-        # the list with the tuples is copied, now we run through v and in the next step through
-        # one_list to compare if the Tuple x has on the position 1 the same value as i in
-        # one_list if they have the same value we remove the x tuple form the transfer_list
+        """ the list with the tuples is copied, now we run through v and in the next step through
+            one_list to compare if the Tuple x has on the position 1 the same value as i in
+            one_list if they have the same value we remove the x tuple form the transfer_list"""
         for x in v:
             for i in one_list:
                 if i is x[1]:
                     transfer_list.remove(x)
-        # sec_dict is now the new clean dict, the tuples we doesn't need are removed
+        """ sec_dict is now the new clean dict, the tuples we doesn't need are removed """
         sec_dict[k] = transfer_list
     return sec_dict
 
-# take two lists, with variables to fill a check list and a dictionary for later use
-# in the control_list are tuples and we pull out a special parameter as the key for the dictionary
+
 def slicing_and_storing(check_list, control_list, slice_var, list_pos, dict_var):
+    """ take two lists, with variables to fill a check list and a dictionary for later use
+        in the control_list are tuples and
+        we pull out a special parameter as the key for the dictionary"""
+
     fill_dict = {}
     sliced_list = (control_list[0:slice_var])
     for i in sliced_list:
-        # pull out of the tuple the integer as key for the dictionary
+        """ pull out of the tuple the integer as key for the dictionary"""
         fill_dict[i[list_pos]] = dict_var
         check_list.append(i[list_pos])
-        # convert dict into list, list items are now keys and
-        # this will automatically remove duplicates
+        """ convert dict into list, list items are now keys and
+            this will automatically remove duplicates"""
         check_list = del_double_entries_list(check_list)
-        # output the checklist and a dictionary with the correct keys and length
+        """ output the checklist and a dictionary with the correct keys and length"""
     return check_list, fill_dict
 
-# convert list into dict into list, list items are now keys
-# and this will automatically remove duplicates
-# and the output is a clean list
+
 def del_double_entries_list(double_list):
+    """ convert list into dict into list, list items are now keys
+        and this will automatically remove duplicates
+        and the output is a clean list"""
+
     return list(dict.fromkeys(double_list))
 
-# check list if list existing and use pre defined functions for separation
+
 def check_list_existing_and_modify(list_to_check, a_dictionary, dictionary_position, slice_var,
                                list_pos, dict_var):
+    """ check list if list existing and use pre defined functions for separation"""
+
     if not list_to_check:
         control_list = a_dictionary.get(dictionary_position)
         output_list, output_dict = slicing_and_storing(list_to_check, control_list, slice_var,
@@ -162,9 +175,11 @@ def check_list_existing_and_modify(list_to_check, a_dictionary, dictionary_posit
 
 
 # function only for clarity
-# fill the People Table with People and the Personfoodrelation Table
-# for connection between People, Food and quantity
+
 def personlist():
+    """ fill the People Table with People and the Personfoodrelation Table
+        for connection between People, Food and quantity"""
+
     while True:
         # get the status of the Food Table
         cur.execute('SELECT * FROM Food')
@@ -222,8 +237,10 @@ def personlist():
                     continue
             break
 
-# foodlist, what is available for the peoble
+
 def foodlist():
+    """ foodlist, what is available for the people"""
+
     while True:
         text = Circle(text1="Ist das Lebensmittel in einer bestimmten Menge notwendig? (j/n): ",
                       text2="Falsche Eingabe", text3=0, check1='j', check2='n')
@@ -253,8 +270,10 @@ def foodlist():
             elif exit == "n":
                 break
 
-# is the person available
+
 def personavailable():
+    """ is the person available"""
+
     while True:
         cur.execute('SELECT name FROM People')
         namerows = cur.fetchall()
@@ -275,8 +294,10 @@ def personavailable():
                 continue
         break
 
-# the Plan of all Plan's
+
 def theplan():
+    """ the Plan of all Plan's, should generate the PLan for the Breakfast"""
+
     # Plan for Table
     theplan_dict = {}
     # Selects the available Persons, What food they want, generats plan_dict
