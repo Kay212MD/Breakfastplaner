@@ -377,7 +377,6 @@ def theplan():
     plan_list = [(v, k) for k, v in plan_dict.items()]
     plan_list.sort(reverse=True)
 
-# ToDo 2. Can I spread some food parts over the people
     if people_div > food_control:
         # form relationship between people_div and food_control, all values are round up
         relation_food_people = math.ceil(people_div/food_control)
@@ -402,7 +401,6 @@ def theplan():
                         # control function necessary for checking the people id, avoid double id's
                         # or just erase the people from foodcount_dict or create a list with id's
                         # it is easy to control and fill and every Startup there is an empty List
-# ToDo make a function out of row check list one function, slice list second function
                         checkin_list, output_dict, foodcount_dict = \
                             check_list_existing_and_modify(checkin_list,
                                                            foodcount_dict, plan_tuple[1], factor,
@@ -411,7 +409,6 @@ def theplan():
                         print('checkin_list', checkin_list)
                         print('output_dict ', output_dict)
                         theplan_dict[plan_tuple[1]] = output_dict
-# ToDo else need algoirthm to solve the Problem, if factor * people_div is bigger
                     else:
                         # reduce factor by one and proof if a division is possible
                         while True:
@@ -446,14 +443,11 @@ def theplan():
                 theplan_dict[plan_tuple[1]] = output_dict
         # backup of the plan for later usage
         theplan_dict_backup = theplan_dict.copy()
-        print('theplan_dict: ', theplan_dict)
-        print('new foodcount_dict:', foodcount_dict)
-# ToDo 3. Have to Check that in the case food_control is not bigger than people_div, nobody have
-    #  ToDo more than one food_id if it is possible
+        # print('theplan_dict: ', theplan_dict)
+        # print('new foodcount_dict:', foodcount_dict)
     else:
         # check how big the difference between people an food is
         food_people_diff = food_control - people_div
-        # creates the factor for the division of the countable foods and the number of Persons
         if food_people_diff == 0:
             # everybody gets one food_id, it is not necessary for checking and slicing the
             # countable food
@@ -463,23 +457,53 @@ def theplan():
                                                1, 1)
             theplan_dict[plan_tuple[1]] = output_dict
         else:
-            # know is something intelligent necessary, what depends on the difference between
-            # people and food, maybe slice the food_list by a factor and distribute them over the
-            # present people
+            # necessary if there is mor food then people
+            # creates a factor for how often one person gets a food_id
             factor = math.ceil(food_control/people_div)
-            for food_id, counter_people_list in foodcount_dict:
-                people_id = people_tuple[0]
-                # maybe a distribution over different people, when the countable_food number is
-                # to high, but I think it isn't necessary, may be it is better for letter
-                # program optimization to integrate a price-tag tag change this
-                for food_id_row_tuple in food_id_rows:
-                    food_id = food_id_row_tuple[0]
+            for plan_tuple in plan_list:
+                # first slice step, checks the first tuple
+                food_id = plan_tuple[1]
+                foodquantity = plan_tuple[0]
+                counter_people_list = foodcount_dict.get(food_id)
+                output_dict = {}
+                counter_people_list_sliced = counter_people_list[:1]
+                counter_people_tuple = counter_people_list_sliced[0]
+                people_id = counter_people_tuple[1]
+                if not checkin_list:
+                    output_dict[people_id] = foodquantity
+                    checkin_list.append(people_id)
+                else:
+                    # there is an checkin_list!
+                    number_of_people_id = checkin_list.count(people_id)
+                    # I could work with break but i tried an other solution (PRACTICE)
+                    # the While loop is for slicing the list, till a number of people id path
+                    # through the if condition
+                    active = True
+                    while active:
+                        if number_of_people_id < factor:
+                            output_dict[people_id] = foodquantity
+                            checkin_list.append(people_id)
+                            active = False
+                        else:
+                            slice_var = 1
+                            active = True
+                            while active:
+                                prev_slice_var = slice_var
+                                slice_var += 1
+                                counter_people_list_sliced = counter_people_list[
+                                                             prev_slice_var:slice_var]
+                                counter_people_tuple = counter_people_list_sliced[0]
+                                people_id = counter_people_tuple[1]
+                                number_of_people_id = checkin_list.count(people_id)
+                                if number_of_people_id < factor:
+                                    output_dict[people_id] = foodquantity
+                                    checkin_list.append(people_id)
+                                    active = False
+                                else:
+                                    active = True
+                theplan_dict[food_id] = output_dict
+                # print('theplan_dict: ', theplan_dict)
 
-                    pass
-                pass
-
-            pass
-        pass
 
 def main():
     #Testbody! GUI needed or/and Webapp
