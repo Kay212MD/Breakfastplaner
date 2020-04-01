@@ -121,7 +121,7 @@ for plan_tuple in plan_list:
         active = True
         while active:
             if number_of_people_id < factor:
-                print("if case")
+                print("if case 1")
                 step += 1
                 print("step: ", step)
                 output_dict[people_id] = foodquantity
@@ -142,7 +142,7 @@ for plan_tuple in plan_list:
                     number_of_people_id = checkin_list.count(people_id)
                     print('number_of_people_id: ', number_of_people_id)
                     if number_of_people_id <= factor:
-                        print("if case")
+                        print("if case 2")
                         step += 1
                         print("step: ", step)
                         output_dict[people_id] = foodquantity
