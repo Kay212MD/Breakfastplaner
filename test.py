@@ -139,9 +139,10 @@ for plan_tuple in plan_list:
                     counter_people_list_sliced = counter_people_list[prev_slice_var:slice_var]
                     counter_people_tuple = counter_people_list_sliced[0]
                     counter = counter_people_tuple[0]
+                    people_id = counter_people_tuple[1]
                     number_of_people_id = checkin_list.count(people_id)
                     print('number_of_people_id: ', number_of_people_id)
-                    if number_of_people_id <= factor:
+                    if number_of_people_id < factor:
                         print("if case 2")
                         step += 1
                         print("step: ", step)
@@ -150,6 +151,7 @@ for plan_tuple in plan_list:
                         checkin_list.append(people_id)
                         active = False
                     else:
+                        print("else case 2")
                         active =True
 
     theplan_dict[food_id] = output_dict
