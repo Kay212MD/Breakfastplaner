@@ -477,7 +477,7 @@ def theplan():
                     number_of_people_id = checkin_list.count(people_id)
                     # I could work with break but i tried an other solution (PRACTICE)
                     # the While loop is for slicing the list, till a number of people id path
-                    # through the if condition
+                    # through the if condition for a fair distribution
                     active = True
                     slice_var = 1
                     while active:
@@ -499,7 +499,6 @@ def theplan():
                                 active = False
                             else:
                                 active = True
-
                 theplan_dict[food_id] = output_dict
                 # print('theplan_dict: ', theplan_dict)
 
