@@ -479,28 +479,27 @@ def theplan():
                     # the While loop is for slicing the list, till a number of people id path
                     # through the if condition
                     active = True
+                    slice_var = 1
                     while active:
                         if number_of_people_id < factor:
                             output_dict[people_id] = foodquantity
                             checkin_list.append(people_id)
                             active = False
                         else:
-                            slice_var = 1
-                            active = True
-                            while active:
-                                prev_slice_var = slice_var
-                                slice_var += 1
-                                counter_people_list_sliced = counter_people_list[
-                                                             prev_slice_var:slice_var]
-                                counter_people_tuple = counter_people_list_sliced[0]
-                                people_id = counter_people_tuple[1]
-                                number_of_people_id = checkin_list.count(people_id)
-                                if number_of_people_id < factor:
-                                    output_dict[people_id] = foodquantity
-                                    checkin_list.append(people_id)
-                                    active = False
-                                else:
-                                    active = True
+                            prev_slice_var = slice_var
+                            slice_var += 1
+                            counter_people_list_sliced = counter_people_list[
+                                                         prev_slice_var:slice_var]
+                            counter_people_tuple = counter_people_list_sliced[0]
+                            people_id = counter_people_tuple[1]
+                            number_of_people_id = checkin_list.count(people_id)
+                            if number_of_people_id < factor:
+                                output_dict[people_id] = foodquantity
+                                checkin_list.append(people_id)
+                                active = False
+                            else:
+                                active = True
+
                 theplan_dict[food_id] = output_dict
                 # print('theplan_dict: ', theplan_dict)
 
