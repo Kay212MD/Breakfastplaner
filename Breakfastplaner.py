@@ -512,6 +512,8 @@ def fill_the_table_with_the_plan():
     # I am also thinking about a combination of both variants.
     # I will not continue working with PyQt, because I want the app to work everywhere.
 
+    # Okay Kivy don't like Python 3.8 sh****
+
 
 
 def main():
