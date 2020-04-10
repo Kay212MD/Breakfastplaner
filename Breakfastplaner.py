@@ -507,6 +507,11 @@ def fill_the_table_with_the_plan():
     """ set the counter related to food and people one up
         create the table with names and quantity,
         so that everybody know's what he/she/it have to buy"""
+    # At the moment I don't know if I call the whole file from a web app or
+    # create an app with Kivy that works everywhere.
+    # I am also thinking about a combination of both variants.
+    # I will not continue working with PyQt, because I want the app to work everywhere.
+
 
 
 def main():
