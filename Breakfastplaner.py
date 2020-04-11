@@ -500,18 +500,18 @@ def theplan():
                             else:
                                 active = True
                 theplan_dict[food_id] = output_dict
-    print('theplan_dict: ', theplan_dict)
+    # print('theplan_dict: ', theplan_dict)
 
     cur.execute('DELETE FROM Plan')
     for food_id, people_id_foodquantity_dict in theplan_dict.items():
         for people_id, foodquantity in people_id_foodquantity_dict.items():
             cur.execute('SELECT name FROM People WHERE id= ?', (people_id,))
             people_name = cur.fetchone()[0]
-            print(people_name)
+            # print(people_name)
             cur.execute('SELECT foodname FROM Food WHERE id= ?', (food_id,))
             food_name = cur.fetchone()[0]
-            print(food_name)
-            print(foodquantity)
+            # print(food_name)
+            # print(foodquantity)
             cur.execute('INSERT INTO Plan (name, foodname, foodquantity)'
                         'VALUES (?, ?, ?)', (people_name, food_name, foodquantity,))
             conn.commit()
@@ -522,7 +522,7 @@ def theplan():
             cur.execute('SELECT counter FROM Personfoodrelation '
                         'WHERE people_id = ? AND food_id = ?', (people_id, food_id,))
             counter = cur.fetchone()[0]
-            print(counter)
+            # print(counter)
             counter = counter + 1
             cur.execute('UPDATE Personfoodrelation SET counter = ? '
                         'WHERE people_id = ? AND food_id = ?',
