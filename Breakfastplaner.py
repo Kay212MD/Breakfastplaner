@@ -501,13 +501,13 @@ def theplan():
                                 active = True
                 theplan_dict[food_id] = output_dict
     print('theplan_dict: ', theplan_dict)
-    # return theplan_dict, theplan_dict_backup
+    return theplan_dict, theplan_dict_backup
 
 def set_the_counter_in_Personfoodrelation():
     pass
 
 
-def fill_the_table_with_the_plan():
+def fill_the_table_with_the_plan(theplan_dict):
     """ set the counter related to food and people one up
         create the table with names and quantity,
         so that everybody know's what he/she/it have to buy"""
@@ -517,7 +517,9 @@ def fill_the_table_with_the_plan():
     # I will not continue working with PyQt, because I want the app to work everywhere.
 
     # Okay Kivy don't like Python 3.8 sh****
-
+    for food_id, people_id_foodquantity_dict in theplan_dict.items():
+        for people_id, foodquantity in people_id_foodquantity_dict.items():
+            cur.execute ()
 
 
 
