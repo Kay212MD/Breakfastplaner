@@ -30,8 +30,8 @@ cur.execute('''CREATE TABLE IF NOT EXISTS Food
 
 #Plan
 cur.execute('''CREATE TABLE IF NOT EXISTS Plan
-            (people_id INTEGER UNIQUE,
-            food_id INTEGER UNIQUE,
+            (name INTEGER UNIQUE,
+            foodname INTEGER UNIQUE,
             foodquantity INTEGER,
             foodreserve INTEGER,
             people_pfq INTEGER)''')
@@ -314,7 +314,7 @@ def theplan():
     # what food is available
     cur.execute('SELECT id FROM Food')
     food_id_rows = cur.fetchall()
-    print('food_id_rows: ', food_id_rows)
+    # print('food_id_rows: ', food_id_rows)
     # first Loop for Food necessary, otherwise there is a counting problem with foodquantity
     # first look after the Food, then who want the food, if somebody want the food count, after
     # checking Food and all People reset Quantity for new Food.... and all again
@@ -500,7 +500,11 @@ def theplan():
                             else:
                                 active = True
                 theplan_dict[food_id] = output_dict
-                # print('theplan_dict: ', theplan_dict)
+    print('theplan_dict: ', theplan_dict)
+    # return theplan_dict, theplan_dict_backup
+
+def set_the_counter_in_Personfoodrelation():
+    pass
 
 
 def fill_the_table_with_the_plan():
@@ -513,6 +517,7 @@ def fill_the_table_with_the_plan():
     # I will not continue working with PyQt, because I want the app to work everywhere.
 
     # Okay Kivy don't like Python 3.8 sh****
+
 
 
 
